@@ -10,46 +10,51 @@ Container {
     onCounterChanged: {
         calculateProperties()
     }
-    property int rectangle_b: -1
-    property int rectangle_a: -1
-    property int diagonal: -1
+    property double rectangle_b: -1.0
     
+
     layout: DockLayout {
     }
     horizontalAlignment: HorizontalAlignment.Fill
     verticalAlignment: VerticalAlignment.Fill
-    
-    function calculateProperties(){
-        console.debug("value: "+value+ " next: "+nextValue)
-        if(value < nextValue){
-            rectangle_a = nextValue - value
+
+    function calculateProperties() {
+        var a = 1.0
+        var b = rectangle_b
+        console.debug("value: " + value + " next: " + nextValue)
+        if (value < nextValue) {
+            a = 1.0 * (nextValue - value)
         }
-        if(value > nextValue){
-            rectangle_a = value - nextValue
+        if (value > nextValue) {
+            a = 1.0 * (value - nextValue)
         }
-        console.debug("Rectangle a: "+rectangle_a+" b: "+rectangle_b)
-        diagonal = Math.sqrt((rectangle_a * rectangle_a)+(rectangle_b*rectangle_b))
-        console.debug("Diagonal: "+diagonal)
-        pivotX = -(diagonal / 2)
+        console.debug("COUNTER " + counter + " a: " + a + " b: " + b)
+        var a2 = Math.pow(a, 2)
+        var b2 = Math.pow(b, 2)
+        var diagonal = Math.sqrt(a2 + b2 )
+        console.debug("Diagonal: " + diagonal)
+        pivotX = diagonal * -0.5
         minWidth = diagonal
         maxWidth = diagonal
-        if(value == nextValue){
+        if (value == nextValue) {
             rotationZ = 0.0
         }
-        if(value < nextValue){
+        if (value < nextValue) {
             // rotationZ = 315.0
-            var sinus = rectangle_a / diagonal
-            var grad = sinus * (180 / Math.PI)
+            var sinus = a / diagonal
+            var grad = sinus * 180 / Math.PI
             rotationZ = 360 - grad
+            console.debug("sinus: " + sinus + " grad: " + grad + " rotateZ: " + rotationZ)
         }
-        if(value > nextValue){
+        if (value > nextValue) {
             // rotationZ = 45.0
-            var sinus = rectangle_a / diagonal
-            var grad = sinus * (180 / Math.PI)
+            var sinus = a / diagonal
+            var grad = sinus * 180 / Math.PI
             rotationZ = grad
+            console.debug("sinus: " + sinus + " grad: " + grad + " rotateZ: " + rotationZ)
         }
     } // calculateProperties
-    
+
     onCreationCompleted: {
         //
     }

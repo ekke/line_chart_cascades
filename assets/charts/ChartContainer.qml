@@ -26,8 +26,6 @@ Container {
     }
     property variant values: [] // [56, 142, 200, 28]
     
-    property int rectangle_b: chartWidth / (values.length - 1)
-    
     layout: DockLayout {
     }
     horizontalAlignment: HorizontalAlignment.Fill
@@ -73,6 +71,17 @@ Container {
                 layout: DockLayout {
                 }
                 
+                Container {
+                    id: innerValueContainer
+                    background: Color.Yellow
+                    minWidth: chartWidth
+                    maxWidth: chartWidth
+                    minHeight: chartHeight
+                    maxHeight: chartHeight
+                    layout: DockLayout {
+                    }
+                    
+                }
 
             } // valueContainer
             
@@ -105,11 +114,12 @@ Container {
             rectangle.minHeight = lineWidth
             rectangle.maxHeight = lineWidth
             rectangle.background = lineColor
-            rectangle.rectangle_b = rectangle_b
-            rectangle.translationX = i * rectangle_b
+            var b = 1.0 * ( chartWidth / (values.length - 1) )
+            rectangle.rectangle_b = b
             rectangle.translationY = chartHeight - values[i] 
+            innerValueContainer.add(rectangle)
             rectangle.counter = i
-            valueContainer.add(rectangle)
+            rectangle.translationX = i * b
         }
     }
     
