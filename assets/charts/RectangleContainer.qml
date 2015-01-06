@@ -38,18 +38,20 @@ Container {
         maxWidth = diagonal
         if (value == nextValue) {
             rotationZ = 0.0
+            return 
+        }
+        var sinus = a / diagonal
+        var grad = sinus * 180 / Math.PI
+        if(a > b){
+            sinus = b / diagonal
+            grad = sinus * 180 / Math.PI
+            grad = 90.0 - grad
         }
         if (value < nextValue) {
-            // rotationZ = 315.0
-            var sinus = a / diagonal
-            var grad = sinus * 180 / Math.PI
             rotationZ = 360 - grad
             console.debug("sinus: " + sinus + " grad: " + grad + " rotateZ: " + rotationZ)
         }
         if (value > nextValue) {
-            // rotationZ = 45.0
-            var sinus = a / diagonal
-            var grad = sinus * 180 / Math.PI
             rotationZ = grad
             console.debug("sinus: " + sinus + " grad: " + grad + " rotateZ: " + rotationZ)
         }
