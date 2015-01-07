@@ -3,9 +3,10 @@ import bb.cascades 1.2
 Container {
     id: chart
     
-    property variant chartBackground: Color.White
-    property variant borderColor: Color.LightGray
-    property variant lineColor: Color.Blue
+    property variant chartBackground: Color.LightGray
+    property variant borderColor: Color.DarkGray
+    property variant lineColor: Color.DarkBlue
+    property variant pointColor: Color.Blue
     
     property int totalWidth: 600
     property int totalHeight: 200
@@ -15,11 +16,12 @@ Container {
     property int chartWidth: totalWidth - (2 * borderWidth) - (2 * space)
     property int chartHeight: totalHeight - (2 * borderWidth) - (2 * space)
     property int lineWidth: 2
-    property int minDistance: 20
+    property int pointWidth: 20
+    property int minDistance: 50
     property int maxPoints: chartWidth / minDistance
     
     property variant originValues: []
-    property int originMax: -1
+    property double originMax: -1
     onOriginMaxChanged: {
         calculateValues()
         createRectangles()
@@ -36,6 +38,10 @@ Container {
         ComponentDefinition {
             id: rectangleComponent
             source: "RectangleContainer.qml"
+        },
+        ComponentDefinition {
+            id: pointComponent
+            source: "PointContainer.qml"
         }
     ]
     
@@ -84,7 +90,7 @@ Container {
         // TODO check maxPoints
         var newValues = []
         for (var i = 0; i < originValues.length; i++){
-            newValues[i] = Math.round(originValues[i] * chartHeight / originMax) 
+            newValues[i] = Math.round(originValues[i] * 1000 * chartHeight / (originMax * 1000))
         }
         values = newValues
         console.debug("transformed values: "+values[0] + ", " +values[1])
@@ -94,7 +100,6 @@ Container {
         var max = values.length - 1
         for (var i = 0; i < max; i++){
             var rectangle = rectangleComponent.createObject()
-            rectangle.originValue = originValues[i]
             rectangle.value = values[i]
             rectangle.nextValue = values[i+1]
             rectangle.minWidth = chartWidth // replaced later with diagonal
@@ -112,7 +117,17 @@ Container {
     
     function createPoints(){
         for (var i = 0; i < values.length; i++){
-            //
+            var linePoint = pointComponent.createObject()
+            linePoint.originValue = originValues[i]
+            linePoint.minWidth = pointWidth
+            linePoint.maxWidth = pointWidth
+            linePoint.minHeight = pointWidth
+            linePoint.maxHeight = pointWidth
+            linePoint.background = pointColor
+            var b = chartWidth / (values.length - 1)
+            linePoint.translationY = chartHeight - values[i] - (pointWidth / 2) + space
+            linePoint.translationX = (i * b) - (pointWidth / 2) + space
+            innerChartContainer.add(linePoint)
         }
     }
     

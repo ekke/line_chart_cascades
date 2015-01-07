@@ -59,17 +59,21 @@ NavigationPane {
             
             chartContainer.chartBackground = Color.LightGray
             chartContainer.borderColor = Color.DarkGray
-            chartContainer.lineColor = Color.Blue
+            chartContainer.lineColor = Color.DarkBlue
+            chartContainer.pointColor = Color.Blue
             chartContainer.totalWidth = 600
             chartContainer.totalHeight = 200
             chartContainer.borderWidth = 2
-            chartContainer.space = 6
+            chartContainer.space = 16
             chartContainer.lineWidth = 2
+            chartContainer.pointWidth = 20
             chartContainer.minDistance = 20
             //chartContainer.originValues = [110, 15, 40, 70, 30, 150, 100]
             chartContainer.originValues = [15, 40, 70, 30, 30, 150, 100, 110, 15]
             // chartContainer.originValues = [0, 150]
+            //chartContainer.originValues = [1.50, 2.80, 0.75, 3.123, 1.75]
             chartContainer.originMax = 150
+            //chartContainer.originMax = 3.123
             
             outerContainer.add(chartContainer)
         }
