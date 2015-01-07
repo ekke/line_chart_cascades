@@ -7,8 +7,8 @@ Container {
     property variant borderColor: Color.LightGray
     property variant lineColor: Color.Blue
     
-    property int totalWidth: 624
-    property int totalHeight: 224
+    property int totalWidth: 600
+    property int totalHeight: 200
     property int borderWidth: 2
     property int space: 10
     
@@ -23,8 +23,9 @@ Container {
     onOriginMaxChanged: {
         calculateValues()
         createRectangles()
+        createPoints()
     }
-    property variant values: [] // [56, 142, 200, 28]
+    property variant values: [] 
     
     layout: DockLayout {
     }
@@ -70,18 +71,6 @@ Container {
                 translationY: space
                 layout: DockLayout {
                 }
-                
-                Container {
-                    id: innerValueContainer
-                    background: Color.Yellow
-                    minWidth: chartWidth
-                    maxWidth: chartWidth
-                    minHeight: chartHeight
-                    maxHeight: chartHeight
-                    layout: DockLayout {
-                    }
-                    
-                }
 
             } // valueContainer
             
@@ -105,7 +94,6 @@ Container {
         var max = values.length - 1
         for (var i = 0; i < max; i++){
             var rectangle = rectangleComponent.createObject()
-            rectangle.lastValue = false 
             rectangle.originValue = originValues[i]
             rectangle.value = values[i]
             rectangle.nextValue = values[i+1]
@@ -114,12 +102,17 @@ Container {
             rectangle.minHeight = lineWidth
             rectangle.maxHeight = lineWidth
             rectangle.background = lineColor
-            var b = 1.0 * ( chartWidth / (values.length - 1) )
-            rectangle.rectangle_b = b
+            var b = chartWidth / (values.length - 1)
             rectangle.translationY = chartHeight - values[i] 
-            innerValueContainer.add(rectangle)
-            rectangle.counter = i
             rectangle.translationX = i * b
+            rectangle.rectangle_b = b
+            valueContainer.add(rectangle)
+        }
+    }
+    
+    function createPoints(){
+        for (var i = 0; i < values.length; i++){
+            //
         }
     }
     

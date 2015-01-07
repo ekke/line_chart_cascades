@@ -5,13 +5,10 @@ Container {
     property int originValue: -1
     property int value: -1
     property int nextValue: -1
-    property bool lastValue: false
-    property int counter: -1
-    onCounterChanged: {
+    property double rectangle_b: -1.0
+    onRectangle_bChanged: {
         calculateProperties()
     }
-    property double rectangle_b: -1.0
-    
 
     layout: DockLayout {
     }
@@ -21,39 +18,37 @@ Container {
     function calculateProperties() {
         var a = 1.0
         var b = rectangle_b
-        console.debug("value: " + value + " next: " + nextValue)
         if (value < nextValue) {
-            a = 1.0 * (nextValue - value)
+            a = nextValue - value
         }
         if (value > nextValue) {
-            a = 1.0 * (value - nextValue)
+            a = value - nextValue
         }
-        console.debug("COUNTER " + counter + " a: " + a + " b: " + b)
         var a2 = Math.pow(a, 2)
         var b2 = Math.pow(b, 2)
-        var diagonal = Math.sqrt(a2 + b2 )
-        console.debug("Diagonal: " + diagonal)
+        var diagonal = Math.sqrt(a2 + b2)
         pivotX = diagonal * -0.5
         minWidth = diagonal
         maxWidth = diagonal
         if (value == nextValue) {
             rotationZ = 0.0
-            return 
+            return
         }
-        var sinus = a / diagonal
-        var grad = sinus * 180 / Math.PI
-        if(a > b){
+        var sinus = 0.0
+        var degree = 0.0
+        if (a < b) {
+            sinus = a / diagonal
+            degree = sinus * 180 / Math.PI
+        } else {
             sinus = b / diagonal
-            grad = sinus * 180 / Math.PI
-            grad = 90.0 - grad
+            degree = sinus * 180 / Math.PI
+            degree = 90.0 - degree
         }
         if (value < nextValue) {
-            rotationZ = 360 - grad
-            console.debug("sinus: " + sinus + " grad: " + grad + " rotateZ: " + rotationZ)
+            rotationZ = 360 - degree
         }
         if (value > nextValue) {
-            rotationZ = grad
-            console.debug("sinus: " + sinus + " grad: " + grad + " rotateZ: " + rotationZ)
+            rotationZ = degree
         }
     } // calculateProperties
 

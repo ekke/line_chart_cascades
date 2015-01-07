@@ -57,18 +57,18 @@ NavigationPane {
         function createChart(){
             var chartContainer = chartComponentDefinition.createObject()
             
-            chartContainer.chartBackground = Color.Cyan
-            chartContainer.borderColor = Color.LightGray
+            chartContainer.chartBackground = Color.LightGray
+            chartContainer.borderColor = Color.DarkGray
             chartContainer.lineColor = Color.Blue
-            chartContainer.totalWidth = 624 // 624
-            chartContainer.totalHeight = 224 // 224
+            chartContainer.totalWidth = 600
+            chartContainer.totalHeight = 200
             chartContainer.borderWidth = 2
-            chartContainer.space = 10 // 10
+            chartContainer.space = 6
             chartContainer.lineWidth = 2
             chartContainer.minDistance = 20
             //chartContainer.originValues = [110, 15, 40, 70, 30, 150, 100]
-            chartContainer.originValues = [15, 40, 70, 30, 150, 100, 110, 15]
-            //chartContainer.originValues = [70, 30, 150, 100]
+            chartContainer.originValues = [15, 40, 70, 30, 30, 150, 100, 110, 15]
+            // chartContainer.originValues = [0, 150]
             chartContainer.originMax = 150
             
             outerContainer.add(chartContainer)
