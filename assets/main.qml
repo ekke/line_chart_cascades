@@ -24,6 +24,11 @@ NavigationPane {
     Page {
         id: rootPage
         
+        titleBar: TitleBar {
+            id: titleBar
+            title: "LineChart"
+        }
+        
         actions: [
             ActionItem {
                 title: "Create Chart"
@@ -53,6 +58,10 @@ NavigationPane {
             
         } // outerContainer
         
+        function onSelectedValue(originValue){
+            // do something
+            titleBar.title = "LineChart (" + originValue + ")"
+        }
         
         function createChart(){
             var chartContainer = chartComponentDefinition.createObject()
@@ -74,7 +83,7 @@ NavigationPane {
             //chartContainer.originValues = [1.50, 2.80, 0.75, 3.123, 1.75]
             chartContainer.originMax = 150
             //chartContainer.originMax = 3.123
-            
+            chartContainer.selectedValue.connect(onSelectedValue)
             outerContainer.add(chartContainer)
         }
         

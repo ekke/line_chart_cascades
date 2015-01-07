@@ -2,6 +2,7 @@ import bb.cascades 1.2
 
 Container {
     id: chart
+    signal selectedValue(string originValue)
     
     property variant chartBackground: Color.LightGray
     property variant borderColor: Color.DarkGray
@@ -115,6 +116,10 @@ Container {
         }
     }
     
+    function onTappedOnValue(originValue){
+        selectedValue(originValue)
+    }
+    
     function createPoints(){
         for (var i = 0; i < values.length; i++){
             var linePoint = pointComponent.createObject()
@@ -127,6 +132,7 @@ Container {
             var b = chartWidth / (values.length - 1)
             linePoint.translationY = chartHeight - values[i] - (pointWidth / 2) + space
             linePoint.translationX = (i * b) - (pointWidth / 2) + space
+            linePoint.tappedOnValue.connect(onTappedOnValue)
             innerChartContainer.add(linePoint)
         }
     }
