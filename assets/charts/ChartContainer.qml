@@ -16,8 +16,8 @@ Container {
     property int chartWidth: totalWidth - (2 * borderWidth) - (2 * space)
     property int chartHeight: totalHeight - (2 * borderWidth) - (2 * space)
     property int lineWidth: 2
-    property int pointWidth: 20
-    property int minDistance: 50
+    property int pointWidth: 16
+    property int minDistance: 40
     property int maxPoints: chartWidth / minDistance
     
     property variant originValues: []

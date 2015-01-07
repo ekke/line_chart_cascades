@@ -66,8 +66,8 @@ NavigationPane {
             chartContainer.borderWidth = 2
             chartContainer.space = 16
             chartContainer.lineWidth = 2
-            chartContainer.pointWidth = 20
-            chartContainer.minDistance = 20
+            chartContainer.pointWidth = 16
+            chartContainer.minDistance = 40
             //chartContainer.originValues = [110, 15, 40, 70, 30, 150, 100]
             chartContainer.originValues = [15, 40, 70, 30, 30, 150, 100, 110, 15]
             // chartContainer.originValues = [0, 150]
