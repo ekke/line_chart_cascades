@@ -88,10 +88,14 @@ Container {
     } // outerChartContainer
     
     function calculateValues(){
+        var startPoint = 0
+        if(originValues.length > maxPoints){
+            startPoint = originValues.length - maxPoints
+        }
         // TODO check maxPoints
         var newValues = []
         for (var i = 0; i < originValues.length; i++){
-            newValues[i] = Math.round(originValues[i] * 1000 * chartHeight / (originMax * 1000))
+            newValues[i] = Math.round(originValues[i] * 100 * chartHeight / (originMax * 100))
         }
         values = newValues
         console.debug("transformed values: "+values[0] + ", " +values[1])
