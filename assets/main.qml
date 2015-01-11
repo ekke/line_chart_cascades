@@ -26,12 +26,13 @@ NavigationPane {
         
         titleBar: TitleBar {
             id: titleBar
-            title: "LineChart"
+            title: "LineChart Demo"
         }
         
         actions: [
             ActionItem {
-                title: "Create Chart"
+                title: "Create Charts"
+                imageSource: "asset:///images/ic_diagnostics.png"
                 ActionBar.placement: ActionBarPlacement.OnBar
                 onTriggered: {
                     rootPage.createChart()
@@ -50,7 +51,7 @@ NavigationPane {
             id: outerContainer
             topPadding: 40
             leftPadding: 40
-            layout: DockLayout {
+            layout: StackLayout {
             }
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
@@ -77,12 +78,49 @@ NavigationPane {
             chartContainer.lineWidth = 2
             chartContainer.pointWidth = 16
             chartContainer.minDistance = 40
-            //chartContainer.originValues = [110, 15, 40, 70, 30, 150, 100]
             chartContainer.originValues = [15, 40, 70, 30, 30, 150, 100, 110, 15]
-            // chartContainer.originValues = [0, 150]
-            //chartContainer.originValues = [1.50, 2.80, 0.75, 3.123, 1.75]
             chartContainer.originMax = 150
-            //chartContainer.originMax = 3.123
+            chartContainer.selectedValue.connect(onSelectedValue)
+            outerContainer.add(chartContainer)
+            
+            //
+            chartContainer = chartComponentDefinition.createObject()
+            chartContainer.topPadding = 40
+            
+            chartContainer.chartBackground = Color.Yellow
+            chartContainer.borderColor = Color.DarkGreen
+            chartContainer.lineColor = Color.DarkGreen
+            chartContainer.pointColor = Color.DarkGreen
+            chartContainer.totalWidth = 600
+            chartContainer.totalHeight = 200
+            chartContainer.borderWidth = 6
+            chartContainer.space = 16
+            chartContainer.lineWidth = 2
+            chartContainer.pointWidth = 16
+            chartContainer.minDistance = 40
+            chartContainer.originValues = [0, 150]
+            chartContainer.originMax = 150
+            chartContainer.selectedValue.connect(onSelectedValue)
+            outerContainer.add(chartContainer)
+            
+            //
+            chartContainer = chartComponentDefinition.createObject()
+            chartContainer.topPadding = 40
+            
+            chartContainer.chartBackground = Color.LightGray
+            chartContainer.borderColor = Color.DarkGray
+            chartContainer.lineColor = Color.Red
+            chartContainer.pointColor = Color.Magenta
+            chartContainer.totalWidth = 600
+            chartContainer.totalHeight = 200
+            chartContainer.borderWidth = 2
+            chartContainer.space = 16
+            chartContainer.lineWidth = 2
+            chartContainer.pointWidth = 16
+            chartContainer.minDistance = 40
+            // problem chartContainer.originValues = [1.50, 2.80, 0.75, 3.123, 1.75]
+            chartContainer.originValues = [1.50, 2.00, 1.25, 3.123, 1.75]
+            chartContainer.originMax = 3.123
             chartContainer.selectedValue.connect(onSelectedValue)
             outerContainer.add(chartContainer)
         }
