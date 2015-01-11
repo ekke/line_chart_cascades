@@ -4,10 +4,13 @@ Container {
     id: chart
     signal selectedValue(string originValue)
     
+    property int lastSelectedIndex: -1
+    
     property variant chartBackground: Color.LightGray
     property variant borderColor: Color.DarkGray
     property variant lineColor: Color.DarkBlue
     property variant pointColor: Color.Blue
+    property variant pointSelectionColor: Color.White
     
     property int totalWidth: 600
     property int totalHeight: 200
@@ -70,6 +73,7 @@ Container {
             
             Container {
                 id: valueContainer
+                property string name: "valueContainer"
                 minWidth: chartWidth
                 maxWidth: chartWidth
                 minHeight: chartHeight
@@ -120,13 +124,32 @@ Container {
         }
     }
     
-    function onTappedOnValue(originValue){
+    function onTappedOnValue(originValue, index){
+        if(lastSelectedIndex > -1){
+            // do deselection
+            for(var i = 0; i < innerChartContainer.controls.length; i++){
+                var c = innerChartContainer.controls[i]
+                if(c.name == "pointContainer" && c.index == lastSelectedIndex){
+                    innerChartContainer.controls[i].background = pointColor
+                }
+            }
+        }
+        lastSelectedIndex = index
+        // do selection code
+        for(var i = 0; i < innerChartContainer.controls.length; i++){
+            var c = innerChartContainer.controls[i]
+            if(c.name == "pointContainer" && c.index == index){
+                innerChartContainer.controls[i].background = pointSelectionColor
+            }
+        }
+        //
         selectedValue(originValue)
     }
     
     function createPoints(){
         for (var i = 0; i < values.length; i++){
             var linePoint = pointComponent.createObject()
+            linePoint.index = i
             linePoint.originValue = originValues[i]
             linePoint.minWidth = pointWidth
             linePoint.maxWidth = pointWidth

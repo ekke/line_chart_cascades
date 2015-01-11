@@ -2,6 +2,7 @@ import bb.cascades 1.2
 
 Container {
     id: rectangle
+    property string name: ""
     property int value: -1
     property int nextValue: -1
     property double rectangle_b: -1.0

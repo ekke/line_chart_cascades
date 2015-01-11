@@ -23,6 +23,7 @@ NavigationPane {
     
     Page {
         id: rootPage
+        property string selectedValue: ""
         
         titleBar: TitleBar {
             id: titleBar
@@ -44,33 +45,56 @@ NavigationPane {
             ComponentDefinition {
                 id: chartComponentDefinition
                 source: "charts/ChartContainer.qml"
+            },
+            ComponentDefinition {
+                id: labelComponentDefinition
+                Container {
+                    id: labelContainer
+                    topPadding: 40
+                    bottomPadding: 40
+                    layout: StackLayout {
+                        orientation: LayoutOrientation.LeftToRight
+                    }
+                    Label {
+                        text: qsTr("Selected Value: ")
+                    }
+                    Label {
+                        text: rootPage.selectedValue
+                    }
+                }
             }
         ]
+        ScrollView {
+            id: scrollView
+            Container {
+                id: outerContainer
+                topPadding: 40
+                leftPadding: 40
+                layout: StackLayout {
+                }
+                
+            
+            
+            } // outerContainer
+        }
         
-        Container {
-            id: outerContainer
-            topPadding: 40
-            leftPadding: 40
-            layout: StackLayout {
-            }
-            horizontalAlignment: HorizontalAlignment.Fill
-            verticalAlignment: VerticalAlignment.Fill
-            
-            
-        } // outerContainer
         
         function onSelectedValue(originValue){
-            // do something
-            titleBar.title = "LineChart (" + originValue + ")"
+            rootPage.selectedValue = originValue
         }
         
         function createChart(){
+            
+            rootPage.selectedValue = ""
+            outerContainer.removeAll()
+            
             var chartContainer = chartComponentDefinition.createObject()
             
             chartContainer.chartBackground = Color.LightGray
             chartContainer.borderColor = Color.DarkGray
             chartContainer.lineColor = Color.DarkBlue
             chartContainer.pointColor = Color.Blue
+            chartContainer.pointSelectionColor = Color.White
             chartContainer.totalWidth = 600
             chartContainer.totalHeight = 200
             chartContainer.borderWidth = 2
@@ -91,6 +115,7 @@ NavigationPane {
             chartContainer.borderColor = Color.DarkGreen
             chartContainer.lineColor = Color.DarkGreen
             chartContainer.pointColor = Color.DarkGreen
+            chartContainer.pointSelectionColor = Color.Magenta
             chartContainer.totalWidth = 600
             chartContainer.totalHeight = 200
             chartContainer.borderWidth = 6
@@ -111,6 +136,7 @@ NavigationPane {
             chartContainer.borderColor = Color.DarkGray
             chartContainer.lineColor = Color.Red
             chartContainer.pointColor = Color.Magenta
+            chartContainer.pointSelectionColor = Color.White
             chartContainer.totalWidth = 600
             chartContainer.totalHeight = 200
             chartContainer.borderWidth = 2
@@ -119,10 +145,14 @@ NavigationPane {
             chartContainer.pointWidth = 16
             chartContainer.minDistance = 40
             // problem chartContainer.originValues = [1.50, 2.80, 0.75, 3.123, 1.75]
-            chartContainer.originValues = [1.50, 2.00, 1.25, 3.123, 1.75]
-            chartContainer.originMax = 3.123
+            // chartContainer.originMax = 3.123
+            chartContainer.originValues = [1.50, 2.00, 1.10, 3.123, 1.75]
+            chartContainer.originMax = 4
             chartContainer.selectedValue.connect(onSelectedValue)
             outerContainer.add(chartContainer)
+            
+            //
+            outerContainer.add(labelComponentDefinition.createObject())
         }
         
         onCreationCompleted: {
